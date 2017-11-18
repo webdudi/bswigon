@@ -13,8 +13,6 @@ class FrontController extends Controller
      */
     public function index()
     {
-        return view('welcome');
-        var_dump(config('app.name'));
-        die();
+        return view('layouts.' . config('app.name') . '.welcome');
     }
 }
