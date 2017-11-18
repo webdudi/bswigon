@@ -13,8 +13,8 @@
 
 /* FORMS */
 
-Route::get('/', ['as' => 'index', 'uses' => 'SystemController@index']);
-Route::get('/home', ['as' => 'home', 'uses' => 'SystemController@index']);
+Route::get('/', ['as' => 'index', 'uses' => 'FrontController@index']);
+Route::get('/home', ['as' => 'home', 'uses' => 'FrontController@index']);
 
 /* ADMIN */
 
@@ -31,4 +31,4 @@ Route::group(['prefix' => 'admin'], function () {
     Route::get('destroy/{id}', ['as' => 'lead_destroy', 'uses' => 'AdminController@destroy'])->middleware('auth');
 });
 
-//Route::get('register', ['as' => 'register', 'uses' => 'LeadsController@create']);
+Route::get('register', ['as' => 'register', 'uses' => 'FrontController@index']);
