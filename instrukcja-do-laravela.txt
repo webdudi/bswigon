@@ -1,0 +1,77 @@
+Instalacja Laravel 5.5:
+
+composer create-project laravel/laravel - istalacja szkieletu aplikacji
+
+-----------------------------------------------------------------------
+
+DODANIE DO KONFIGURACJI SERWERA APACHE2
+
+<Directory "/var/www/public">
+  AllowOverride all
+  Require all granted
+</Directory>
+
+-----------------------------------------------------------------------
+
+Zmiana .htaccess
+
+<IfModule mod_rewrite.c>
+    <IfModule mod_negotiation.c>
+        Options -MultiViews
+    </IfModule>
+
+    RewriteEngine On
+
+    # Redirect Trailing Slashes If Not A Folder...
+    RewriteCond %{REQUEST_FILENAME} !-d
+    RewriteRule ^(.*)/$ /$1 [L,R=301]
+
+    # Handle Front Controller...
+    RewriteCond %{REQUEST_FILENAME} !-d
+    RewriteCond %{REQUEST_FILENAME} !-f
+#    RewriteRule ^ index.php [L]
+    RewriteRule ^(.+)$ /index.php [L]
+
+    # Handle Authorization Header
+    RewriteCond %{HTTP:Authorization} .
+    RewriteRule .* - [E=HTTP_AUTHORIZATION:%{HTTP:Authorization}]
+</IfModule>
+
+-----------------------------------------------------------------------
+
+composer require "laravelcollective/html":"^5.2.0" - instalacja obsługi formularzy
+
+-----------------------------------------------------------------------
+
+php artisan make:controller LeadController      	- tworzenie kontrolera
+php artisan make:request ContactFormRequest		- tworzenie requesta
+
+-----------------------------------------------------------------------
+
+Migracje
+
+php artisan make:migration create_users_table 		- tworzenie migracji
+php artisan migrate 					- wykonanie migracji, które są w katalogu migrations
+php artisan make:model User 				- tworzenie modelu
+php artisan make:auth					- tworzenie auth
+
+php artisan migrate:refresh				- zakłada strukturę bazy (UWAGA! Czyści bazę z danych!)
+
+
+--------------------------------
+
+Gdy migracje zwracają błąd (SQLSTATE[42000]) dodajemy w:
+
+plik AppServiceProvider.php
+
+use Illuminate\Support\Facades\Schema; --->>> dodać do USE
+
+public function boot()
+{
+    Schema::defaultStringLength(191);
+}
+
+-----------------------------------------------------------------------
+
+Seeder - wypełnienie bazy
+php artisan db:seed
